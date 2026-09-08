@@ -1,0 +1,8 @@
+.cache/
+.gocache/
+artifacts/
+bin/
+*.exe
+__pycache__/
+*.pyc
+.env

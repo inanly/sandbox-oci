@@ -1,0 +1,25 @@
+sandbox-oci
+
+The helper links the imagecommitter library from OpenSandbox:
+https://github.com/opensandbox-group/OpenSandbox
+Pinned commit: d34f5e19ff0d6c48b0b59b8a5ed6ecc432c2e186
+Copyright 2025-2026 Alibaba Group Holding Ltd.
+Licensed under the Apache License, Version 2.0.
+
+OpenSandbox's upstream source and dependency notices are retained in the
+unmodified build checkout. This project adds source preflight, strict lifecycle
+coordination, a local CLI, and portability fixtures. It is not an official
+Kubernetes or OpenSandbox project.
+
+The helper image contains an attribution bundle at
+`/usr/share/licenses/sandbox-oci`. The bundle includes this project's
+`LICENSE`, this `NOTICE`, `versions.json`, the pinned OpenSandbox `LICENSE`,
+attribution files collected for the helper's Go dependency graph, Go and
+toolchain license materials, Debian CA-certificate copyright and common
+license texts, and helper build information. The dependency manifest is
+`/usr/share/licenses/sandbox-oci/manifest.json`.
+
+The attribution collector is automated and intentionally conservative. It can
+include notices that are not individually applicable to every binary or
+module, and it is not a complete legal determination or an SBOM. Review the
+upstream terms and the files shipped in the image for distribution decisions.

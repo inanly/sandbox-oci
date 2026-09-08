@@ -1,0 +1,9 @@
+{
+  "opensandboxCommit": "d34f5e19ff0d6c48b0b59b8a5ed6ecc432c2e186",
+  "kindVersion": "v0.33.0",
+  "nodeImage": "kindest/node:v1.34.11@sha256:44e222ee2132dab25ff87301682f89eb82c7880ea3a1bf543bfe9708fd08d67d",
+  "platform": "linux/amd64",
+  "goImage": "golang:1.25.4-bookworm@sha256:e17419604b6d1f9bc245694425f0ec9b1b53685c80850900a376fb10cb0f70cb",
+  "pythonImage": "python:3.12-slim@sha256:78387bc3881b8273120a12ebe6c1ab22b018ccc2c9adf565ae1ac9b536e184ea",
+  "registryImage": "registry:3@sha256:1be55279f18a2fe1a74edf2664cac61c1bea305b7b4642dab412e7affdcb3e33"
+}

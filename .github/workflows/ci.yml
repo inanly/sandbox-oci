@@ -1,0 +1,71 @@
+name: Test
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  unit:
+    strategy:
+      matrix:
+        os: [ubuntu-24.04, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: false
+      - run: go test ./...
+      - run: go vet ./...
+      - run: go test helper/licensecollector/main.go helper/licensecollector/main_test.go
+      - run: go build ./cmd/sandbox-oci
+  portability:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: false
+      - name: Install pinned kubectl
+        shell: bash
+        run: |
+          mkdir -p .cache/tools
+          curl --fail --location https://dl.k8s.io/release/v1.34.1/bin/linux/amd64/kubectl -o .cache/tools/kubectl
+          curl --fail --location https://dl.k8s.io/release/v1.34.1/bin/linux/amd64/kubectl.sha256 -o .cache/tools/kubectl.sha256
+          echo "$(cat .cache/tools/kubectl.sha256)  .cache/tools/kubectl" | sha256sum --check
+          chmod +x .cache/tools/kubectl
+          echo "$PWD/.cache/tools" >> "$GITHUB_PATH"
+      - name: Full local-registry portability proof
+        shell: pwsh
+        run: ./scripts/test-e2e.ps1 -Prepare
+      - name: Failure and recovery proof
+        shell: pwsh
+        run: |
+          ./scripts/lab.ps1 -Action build-test-helper
+          ./scripts/lab.ps1 -Action source
+          ./scripts/test-failures.ps1
+      - name: Registry transport proof
+        shell: pwsh
+        run: ./scripts/test-registry.ps1
+      - name: Helper image attribution
+        shell: pwsh
+        run: ./scripts/test-attribution.ps1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: portability-results
+          path: |
+            artifacts/e2e-result.json
+            artifacts/snapshot.json
+            artifacts/expected-push-failure.txt
+            artifacts/failures-result.json
+            artifacts/registry-result.json
+            artifacts/attribution-result.json
+      - name: Clean owned lab resources
+        if: always()
+        shell: pwsh
+        run: ./scripts/lab.ps1 -Action cleanup

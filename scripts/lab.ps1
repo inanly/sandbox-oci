@@ -306,6 +306,7 @@ function Source {
     }
     $existingNamespace = Get-SourceKubectlOutput -Arguments @('get', 'namespace', 'sandbox-oci', '--ignore-not-found', '-o', 'name')
     if (-not $existingNamespace) { Invoke-SourceKubectl -Arguments @('create', 'namespace', 'sandbox-oci') }
+    Invoke-SourceKubectl -Arguments @('-n', 'sandbox-oci', 'wait', '--for=create', 'serviceaccount/default', '--timeout=60s')
     $existingPod = Get-SourceKubectlOutput -Arguments @('-n', 'sandbox-oci', 'get', 'pod', 'source', '--ignore-not-found', '-o', 'name')
     if ($existingPod) {
         throw 'Source pod already exists. Refusing to replace it.'
@@ -340,7 +341,8 @@ spec:
 
 function Restore-Cluster {
     New-FreshKindCluster -Name $RestoreCluster
-    Invoke-Kubectl -Arguments @('create', 'namespace', 'sandbox-oci')
+    Invoke-Kubectl -Arguments @('--context', "kind-$RestoreCluster", 'create', 'namespace', 'sandbox-oci')
+    Invoke-Kubectl -Arguments @('--context', "kind-$RestoreCluster", '-n', 'sandbox-oci', 'wait', '--for=create', 'serviceaccount/default', '--timeout=60s')
 }
 
 function Remove-OwnedKindCluster {

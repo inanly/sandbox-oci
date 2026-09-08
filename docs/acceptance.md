@@ -39,7 +39,7 @@ The first end-to-end pass completed on 2026-09-08 at 11:08 UTC on Windows PowerS
 | Normal-helper snapshot after recovery and Docker verification | Passed; digest `sha256:bee87c4f7d2ede16479507328c4b23864f779c72963ae989f8192b6210bc8a66`; see `artifacts/recovery-regression.json` |
 | Node-loss recovery | Not tested |
 | External pause-race integration | Not tested |
-| Linux GitHub Actions | Workflow added; not yet run |
+| Linux GitHub Actions | See [remote workflow results](https://github.com/inanly/sandbox-oci/actions/workflows/ci.yml); local evidence below is separate |
 | Independent source/target registry flags, default false | Go tests passed |
 | Default target HTTPS rejects HTTP; explicit target opt-in permits snapshot and Docker restore | Passed; `artifacts/registry-result.json` |
 

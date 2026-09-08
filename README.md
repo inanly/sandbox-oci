@@ -1,5 +1,7 @@
 # sandbox-oci
 
+[![Test](https://github.com/inanly/sandbox-oci/actions/workflows/ci.yml/badge.svg)](https://github.com/inanly/sandbox-oci/actions/workflows/ci.yml)
+
 Experimental Go CLI for capturing one quiesced Linux/amd64 container rootfs from kind containerd overlayfs, publishing it to a local OCI registry, and restoring it into Docker or a fresh kind cluster.
 
 The first end-to-end lab passed on 2026-09-08 using Windows PowerShell and Docker Desktop's Linux engine: failed push preserved the source, Docker verified the snapshot, and a fresh kind cluster restored it after deletion of the source Pod. See [acceptance results](docs/acceptance.md) and [architecture and limits](docs/architecture.md). This is a controlled PoC, not a general Kubernetes snapshot service.
@@ -40,8 +42,8 @@ to the good registry, verifies with a new Docker container using the host image
 store, deletes the source, and verifies restore through the isolated image
 store of a fresh kind cluster. To prepare the lab and run the test in one
 step, use `./scripts/test-e2e.ps1 -Prepare`. The same actions are available
-with `pwsh` on Linux. A CI workflow exists, but it has not been run on GitHub
-yet.
+with `pwsh` on Linux. See [GitHub Actions](https://github.com/inanly/sandbox-oci/actions/workflows/ci.yml)
+for the current Windows/Ubuntu checks and Linux portability runs.
 
 The E2E run deletes the source Pod as part of its fresh-kind restore check.
 Recreate the source fixture before running the failure-path checks. They use a

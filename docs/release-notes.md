@@ -2,7 +2,8 @@
 
 This document records the scope and previously observed evidence for the
 experimental initial release of `sandbox-oci`. It is release documentation
-only; no GitHub release or publication is created by this repository change.
+only; source is available at [inanly/sandbox-oci](https://github.com/inanly/sandbox-oci).
+No tagged GitHub release has been created.
 
 This candidate distributes source only. Build it with
 `./scripts/package-source.ps1`; the ignored `artifacts/release-candidate/`
@@ -35,7 +36,7 @@ The source candidate was subsequently verified on 2026-09-08 at 12:19–12:20 UT
 E2E, failure/recovery and registry suites all passed after recreating the owned
 clusters and registry, with tool and host image caches retained. Extracted ZIP
 files matched the manifest, and their Go tests, vet and build passed.
-GitHub Actions has been added but has not been run on GitHub.
+GitHub Actions runs are available in the [workflow history](https://github.com/inanly/sandbox-oci/actions/workflows/ci.yml).
 Node-loss recovery, an external pause race, custom or
 self-signed TLS handling, and a forced source base-blob refetch remain
 untested.
